@@ -110,7 +110,7 @@ project('spring-cloud-skipper-acceptance-docker') {
 	
 	dockerCompose {
 		template 'src/main/resources/docker-compose.yml.template'
-		dockerComposeFile 'docker-compose.yml'
+		dockerComposeFile 'build/docker-compose.yml'
 	}
 	
 }
