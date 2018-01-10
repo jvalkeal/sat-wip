@@ -1,0 +1,130 @@
+buildscript {
+	ext {
+		springBootVersion = '2.0.0.M7'
+		springCloudSkipperVersion = '1.0.0.BUILD-SNAPSHOT'
+		junitPlatformVersion = '1.0.2'
+		junitJupiterVersion = '5.0.2'
+		dockerComposeRuleJunit4Version = '0.33.0'
+		gradleDockerVersion = '0.17.2'
+	}
+	repositories {
+		mavenCentral()
+		maven { url "https://repo.spring.io/snapshot" }
+		maven { url "https://repo.spring.io/milestone" }
+		maven { url "https://dl.bintray.com/palantir/releases" }
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath("org.junit.platform:junit-platform-gradle-plugin:${junitPlatformVersion}")
+		classpath("com.palantir.gradle.docker:gradle-docker:${gradleDockerVersion}")
+	}
+}
+
+
+configure(allprojects) {
+	apply plugin: 'java'
+	apply plugin: 'eclipse'
+	apply plugin: 'idea'
+	apply plugin: 'io.spring.dependency-management'
+
+	group = 'org.springframework.cloud.skipper.acceptance'
+
+	repositories {
+		mavenCentral()
+		maven { url "https://repo.spring.io/snapshot" }
+		maven { url "https://repo.spring.io/milestone" }
+		maven { url "https://dl.bintray.com/palantir/releases" }
+	}
+
+	compileJava {
+		sourceCompatibility = 1.8
+		targetCompatibility = 1.8
+	}
+
+	compileTestJava {
+		sourceCompatibility = 1.8
+		targetCompatibility = 1.8
+	}
+	
+	dependencyManagement {
+		imports {
+		}
+		dependencies {
+			dependency "com.palantir.docker.compose:docker-compose-rule-junit4:$dockerComposeRuleJunit4Version"
+			dependency "org.junit.platform:junit-platform-engine:$junitPlatformVersion"
+			dependency "org.junit.platform:junit-platform-launcher:$junitPlatformVersion"
+			dependency "org.junit.platform:junit-platform-runner:$junitPlatformVersion"
+			dependency "org.junit.platform:junit-platform-suite-api:$junitPlatformVersion"
+			dependency "org.springframework.cloud:spring-cloud-skipper-server:$springCloudSkipperVersion"
+		}
+	}
+}
+
+configure(subprojects) { subproject ->
+	apply plugin: 'org.springframework.boot'
+
+	bootJar {
+		enabled = false
+	}
+
+	jar {
+		enabled = true
+	}
+}
+
+project('spring-cloud-skipper-acceptance-core') {
+	apply plugin: 'org.junit.platform.gradle.plugin'
+	dependencies {
+		compile('com.palantir.docker.compose:docker-compose-rule-junit4')
+		compile('org.junit.jupiter:junit-jupiter-api')
+		compile('org.junit.jupiter:junit-jupiter-engine')
+		compile('org.junit.platform:junit-platform-engine')
+		compile('org.junit.platform:junit-platform-launcher')
+		compile('org.junit.platform:junit-platform-runner')
+		compile('org.junit.platform:junit-platform-suite-api')
+		testCompile('org.springframework.boot:spring-boot-starter-test')	
+	}
+}
+
+def getResolvedVersionOf(configurations, dependency) {
+	return configurations.compile.resolvedConfiguration.firstLevelModuleDependencies.findAll{
+		it.moduleName == dependency
+		}.moduleArtifacts.first()
+}
+
+project('spring-cloud-skipper-acceptance-docker') {
+	apply plugin: 'com.palantir.docker'
+	apply plugin: 'com.palantir.docker-compose'
+	apply plugin: 'com.palantir.docker-run'
+
+	dependencies {
+		compile('org.springframework.cloud:spring-cloud-skipper-server')
+	}
+
+	docker {
+		name "spring-cloud-skipper-acceptance-docker"
+		dockerfile file('src/main/resources/Dockerfile')
+		files getResolvedVersionOf(configurations, "spring-cloud-skipper-server").file.absolutePath[0]
+		buildArgs(['JAR_FILE': getResolvedVersionOf(configurations, "spring-cloud-skipper-server").file.name[0]])
+	}
+	
+	dockerCompose {
+		template 'src/main/resources/docker-compose.yml.template'
+		dockerComposeFile 'docker-compose.yml'
+	}
+	
+}
+
+project('spring-cloud-skipper-acceptance-tests') {
+	apply plugin: 'org.junit.platform.gradle.plugin'
+	dependencies {
+		compile project(":spring-cloud-skipper-acceptance-core")
+		testCompile('org.springframework.boot:spring-boot-starter-test')
+	}
+}
+
+
+
+
+
+
