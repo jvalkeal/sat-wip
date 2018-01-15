@@ -14,8 +14,8 @@ services:
       timeout: 5s
       retries: 12
   skipper:
-    image: 'spring-cloud-skipper-acceptance-docker'
+    image: 'spring-cloud-skipper-acceptance-docker{{org.springframework.cloud.skipper.acceptance:spring-cloud-skipper-acceptance-docker}}'
     ports:
-      - 9393
+      - 7577
     depends_on:
       - "postgres"

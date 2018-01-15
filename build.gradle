@@ -51,6 +51,7 @@ configure(allprojects) {
 		}
 		dependencies {
 			dependency "com.palantir.docker.compose:docker-compose-rule-junit4:$dockerComposeRuleJunit4Version"
+			dependency "org.junit.jupiter:junit-jupiter-params:$junitJupiterVersion"
 			dependency "org.junit.platform:junit-platform-engine:$junitPlatformVersion"
 			dependency "org.junit.platform:junit-platform-launcher:$junitPlatformVersion"
 			dependency "org.junit.platform:junit-platform-runner:$junitPlatformVersion"
@@ -78,6 +79,7 @@ project('spring-cloud-skipper-acceptance-core') {
 		compile('com.palantir.docker.compose:docker-compose-rule-junit4')
 		compile('org.junit.jupiter:junit-jupiter-api')
 		compile('org.junit.jupiter:junit-jupiter-engine')
+		compile('org.junit.jupiter:junit-jupiter-params')
 		compile('org.junit.platform:junit-platform-engine')
 		compile('org.junit.platform:junit-platform-launcher')
 		compile('org.junit.platform:junit-platform-runner')
@@ -94,8 +96,6 @@ def getResolvedVersionOf(configurations, dependency) {
 
 project('spring-cloud-skipper-acceptance-docker') {
 	apply plugin: 'com.palantir.docker'
-	apply plugin: 'com.palantir.docker-compose'
-	apply plugin: 'com.palantir.docker-run'
 
 	dependencies {
 		compile('org.springframework.cloud:spring-cloud-skipper-server')
@@ -108,18 +108,23 @@ project('spring-cloud-skipper-acceptance-docker') {
 		buildArgs(['JAR_FILE': getResolvedVersionOf(configurations, "spring-cloud-skipper-server").file.name[0]])
 	}
 	
-	dockerCompose {
-		template 'src/main/resources/docker-compose.yml.template'
-		dockerComposeFile 'build/docker-compose.yml'
-	}
 	
 }
 
 project('spring-cloud-skipper-acceptance-tests') {
+	apply plugin: 'com.palantir.docker-compose'
 	apply plugin: 'org.junit.platform.gradle.plugin'
+
 	dependencies {
 		compile project(":spring-cloud-skipper-acceptance-core")
 		testCompile('org.springframework.boot:spring-boot-starter-test')
+		testCompile('org.springframework.boot:spring-boot-starter-web')
+		docker project(":spring-cloud-skipper-acceptance-docker")
+	}
+
+	dockerCompose {
+		template 'src/test/resources/docker-compose.yml.template'
+		dockerComposeFile 'build/docker-compose.yml'
 	}
 }
 

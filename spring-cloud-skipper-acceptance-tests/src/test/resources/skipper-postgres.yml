@@ -1,0 +1,21 @@
+version: '3'
+services:
+  postgres:
+    image: 'postgres:10'
+    environment:
+      - POSTGRES_PASSWORD=spring
+      - POSTGRES_USER=spring
+      - POSTGRES_DB=skipper
+    ports:
+      - 5432
+    healthcheck:
+      test: ["CMD", "psql", "-U", "postgres", "-w", "-c", "SELECT version();"]
+      interval: 1s
+      timeout: 5s
+      retries: 12
+  skipper:
+    image: 'spring-cloud-skipper-acceptance-docker'
+    ports:
+      - 7577
+    depends_on:
+      - "postgres"
