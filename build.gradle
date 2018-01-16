@@ -57,10 +57,6 @@ configure(allprojects) {
 		dependencies {
 			dependency "com.palantir.docker.compose:docker-compose-rule-junit4:$dockerComposeRuleJunit4Version"
 			dependency "org.junit.jupiter:junit-jupiter-params:$junitJupiterVersion"
-			dependency "org.junit.platform:junit-platform-engine:$junitPlatformVersion"
-			dependency "org.junit.platform:junit-platform-launcher:$junitPlatformVersion"
-			dependency "org.junit.platform:junit-platform-runner:$junitPlatformVersion"
-			dependency "org.junit.platform:junit-platform-suite-api:$junitPlatformVersion"
 			dependency "org.springframework.cloud:spring-cloud-skipper-server:$springCloudSkipperVersion"
 		}
 	}
@@ -85,10 +81,6 @@ project('spring-cloud-skipper-acceptance-core') {
 		compile('org.junit.jupiter:junit-jupiter-api')
 		compile('org.junit.jupiter:junit-jupiter-engine')
 		compile('org.junit.jupiter:junit-jupiter-params')
-		compile('org.junit.platform:junit-platform-engine')
-		compile('org.junit.platform:junit-platform-launcher')
-		compile('org.junit.platform:junit-platform-runner')
-		compile('org.junit.platform:junit-platform-suite-api')
 		testCompile('org.springframework.boot:spring-boot-starter-test')	
 	}
 }
