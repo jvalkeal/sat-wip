@@ -104,8 +104,8 @@ project('spring-cloud-skipper-acceptance-docker') {
 	docker {
 		name "spring-cloud-skipper-acceptance-docker"
 		dockerfile file('src/main/resources/Dockerfile')
-		files getResolvedVersionOf(configurations, "spring-cloud-skipper-server").file.absolutePath[0]
-		buildArgs(['JAR_FILE': getResolvedVersionOf(configurations, "spring-cloud-skipper-server").file.name[0]])
+		files getResolvedVersionOf(configurations, "spring-cloud-skipper-server").file.absolutePath[0], 'src/main/resources/entrypoint.sh'
+		buildArgs(['JAR_FILE': getResolvedVersionOf(configurations, "spring-cloud-skipper-server").file.name[0], 'ENTRYPOINT_FILE': 'entrypoint.sh'])
 	}
 	
 	

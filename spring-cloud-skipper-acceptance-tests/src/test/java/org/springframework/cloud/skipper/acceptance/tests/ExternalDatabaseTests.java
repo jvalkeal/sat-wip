@@ -2,6 +2,8 @@ package org.springframework.cloud.skipper.acceptance.tests;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.concurrent.TimeUnit;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.cloud.skipper.acceptance.core.DockerCompose;
 import org.springframework.cloud.skipper.acceptance.core.DockerComposeInfo;
@@ -10,6 +12,12 @@ import org.springframework.web.client.RestTemplate;
 
 import com.palantir.docker.compose.DockerComposeRule;
 import com.palantir.docker.compose.connection.DockerPort;
+
+import static com.jayway.awaitility.Awaitility.await;
+import static com.jayway.awaitility.Awaitility.given;
+import static com.jayway.awaitility.Awaitility.with;
+//import static org.awaitility.Awaitility.*;
+
 
 public class ExternalDatabaseTests {
 
@@ -21,21 +29,17 @@ public class ExternalDatabaseTests {
 		assertThat(container1).isNotNull();
 		DockerPort container2 = docker.containers().container("skipper").port(7577);	
 		assertThat(container2).isNotNull();
-		
+				
+		String url = "http://" + container2.getIp() + ":" + container2.getExternalPort() + "/api/about";
 		RestTemplate template = new RestTemplate();
 		
-		String url = "http://" + container2.getIp() + ":" + container2.getExternalPort() + "/api/about";
-		
-		for (int i = 0; i < 20; i++) {
-			try {
-				String response = template.getForObject(url, String.class);
-				System.out.println("RESPONSE:");
-				System.out.println(response);
-			} catch (RestClientException e) {
-				System.out.println(e);
-			}
-			Thread.sleep(1000);			
-		}
+		with()
+			.pollInterval(1, TimeUnit.SECONDS)
+			.and()
+		.await()
+			.ignoreExceptions()
+			.atMost(20, TimeUnit.SECONDS)
+			.until(() -> template.getForObject(url, String.class).contains("Spring Cloud Skipper Server"));
 		
 	}
 
@@ -44,24 +48,19 @@ public class ExternalDatabaseTests {
 	public void testSkipperWithMysql(DockerComposeInfo dockerComposeInfo) throws Exception {
 		DockerComposeRule docker = dockerComposeInfo.getRule();
 		DockerPort container1 = docker.containers().container("mysql").port(3306);	
-		assertThat(container1).isNotNull();
+		assertThat(container1).isNotNull();		
 		DockerPort container2 = docker.containers().container("skipper").port(7577);	
 		assertThat(container2).isNotNull();
-		
+
+		String url = "http://" + container2.getIp() + ":" + container2.getExternalPort() + "/api/about";
 		RestTemplate template = new RestTemplate();
 		
-		String url = "http://" + container2.getIp() + ":" + container2.getExternalPort() + "/api/about";
-		
-		for (int i = 0; i < 20; i++) {
-			try {
-				String response = template.getForObject(url, String.class);
-				System.out.println("RESPONSE:");
-				System.out.println(response);
-			} catch (RestClientException e) {
-				System.out.println(e);
-			}
-			Thread.sleep(1000);			
-		}
-		
+		with()
+			.pollInterval(1, TimeUnit.SECONDS)
+			.and()
+		.await()
+			.ignoreExceptions()
+			.atMost(20, TimeUnit.SECONDS)
+			.until(() -> template.getForObject(url, String.class).contains("Spring Cloud Skipper Server"));
 	}	
 }

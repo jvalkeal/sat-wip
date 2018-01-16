@@ -15,6 +15,9 @@ services:
       retries: 12
   skipper:
     image: 'spring-cloud-skipper-acceptance-docker'
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/skipper
+      - SPRING_DATASOURCE_DRIVER=org.postgresql.Driver
     ports:
       - 7577
     depends_on:
