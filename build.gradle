@@ -20,6 +20,11 @@ buildscript {
 	}
 }
 
+def getResolvedVersionOf(configurations, dependency) {
+	return configurations.compile.resolvedConfiguration.firstLevelModuleDependencies.findAll{
+		it.moduleName == dependency
+		}.moduleArtifacts.first()
+}
 
 configure(allprojects) {
 	apply plugin: 'java'
@@ -88,12 +93,6 @@ project('spring-cloud-skipper-acceptance-core') {
 	}
 }
 
-def getResolvedVersionOf(configurations, dependency) {
-	return configurations.compile.resolvedConfiguration.firstLevelModuleDependencies.findAll{
-		it.moduleName == dependency
-		}.moduleArtifacts.first()
-}
-
 project('spring-cloud-skipper-acceptance-docker') {
 	apply plugin: 'com.palantir.docker'
 
@@ -108,24 +107,22 @@ project('spring-cloud-skipper-acceptance-docker') {
 		buildArgs(['JAR_FILE': getResolvedVersionOf(configurations, "spring-cloud-skipper-server").file.name[0], 'ENTRYPOINT_FILE': 'entrypoint.sh'])
 	}
 	
+	build.dependsOn 'docker'
 	
 }
 
 project('spring-cloud-skipper-acceptance-tests') {
-	apply plugin: 'com.palantir.docker-compose'
 	apply plugin: 'org.junit.platform.gradle.plugin'
 
 	dependencies {
 		compile project(":spring-cloud-skipper-acceptance-core")
+		compile project(":spring-cloud-skipper-acceptance-docker")
 		testCompile('org.springframework.boot:spring-boot-starter-test')
 		testCompile('org.springframework.boot:spring-boot-starter-web')
-		docker project(":spring-cloud-skipper-acceptance-docker")
 	}
 
-	dockerCompose {
-		template 'src/test/resources/docker-compose.yml.template'
-		dockerComposeFile 'build/docker-compose.yml'
-	}
+		
+	build.dependsOn ':spring-cloud-skipper-acceptance-docker:docker'
 }
 
 
