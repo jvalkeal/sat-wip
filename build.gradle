@@ -39,6 +39,7 @@ configure(allprojects) {
 		maven { url "https://repo.spring.io/snapshot" }
 		maven { url "https://repo.spring.io/milestone" }
 		maven { url "https://dl.bintray.com/palantir/releases" }
+		mavenLocal()
 	}
 
 	compileJava {
@@ -81,7 +82,7 @@ project('spring-cloud-skipper-acceptance-core') {
 		compile('org.junit.jupiter:junit-jupiter-api')
 		compile('org.junit.jupiter:junit-jupiter-engine')
 		compile('org.junit.jupiter:junit-jupiter-params')
-		testCompile('org.springframework.boot:spring-boot-starter-test')	
+		testCompile('org.springframework.boot:spring-boot-starter-test')
 	}
 }
 
@@ -97,6 +98,24 @@ project('spring-cloud-skipper-acceptance-docker') {
 		dockerfile file('src/main/resources/Dockerfile')
 		files getResolvedVersionOf(configurations, "spring-cloud-skipper-server").file.absolutePath[0], 'src/main/resources/entrypoint.sh'
 		buildArgs(['JAR_FILE': getResolvedVersionOf(configurations, "spring-cloud-skipper-server").file.name[0], 'ENTRYPOINT_FILE': 'entrypoint.sh'])
+	}
+	
+	build.dependsOn 'docker'
+	
+}
+
+project('spring-cloud-skipper-acceptance-docker2') {
+	apply plugin: 'com.palantir.docker'
+
+	dependencies {
+		compile('org.springframework.cloud.skipper.acceptance.app:skipper-oracle:1.0.0.BUILD-SNAPSHOT')
+	}
+
+	docker {
+		name "spring-cloud-skipper-acceptance-docker2"
+		dockerfile file('src/main/resources/Dockerfile')
+		files getResolvedVersionOf(configurations, "skipper-oracle").file.absolutePath[0], 'src/main/resources/entrypoint.sh'
+		buildArgs(['JAR_FILE': getResolvedVersionOf(configurations, "skipper-oracle").file.name[0], 'ENTRYPOINT_FILE': 'entrypoint.sh'])
 	}
 	
 	build.dependsOn 'docker'

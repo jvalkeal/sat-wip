@@ -28,6 +28,14 @@ public class ExternalDatabaseTests {
 		String url = "http://" + port.getIp() + ":" + port.getExternalPort() + "/api/about";
 		assertServerRunning(url);
 	}
+
+	@Test
+	@DockerCompose(locations = { "src/test/resources/skipper-oracle.yml" }, services = { "oracle", "skipper" })
+	public void testSkipperWithOracle(DockerComposeInfo dockerComposeInfo) throws Exception {
+		DockerPort port = dockerComposeInfo.getRule().containers().container("skipper").port(7577);
+		String url = "http://" + port.getIp() + ":" + port.getExternalPort() + "/api/about";
+		assertServerRunning(url);
+	}
 	
 	private void assertServerRunning(String url) {
 		RestTemplate template = new RestTemplate();
@@ -36,7 +44,7 @@ public class ExternalDatabaseTests {
 			.and()
 			.await()
 				.ignoreExceptions()
-				.atMost(20, TimeUnit.SECONDS)
+				.atMost(60, TimeUnit.SECONDS)
 				.until(() -> template.getForObject(url, String.class).contains("Spring Cloud Skipper Server"));
 	}
 }
