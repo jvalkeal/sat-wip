@@ -25,6 +25,13 @@ repositories {
 	maven { url "http://repo.springsource.org/libs-snapshot" }
 	maven { url "http://repo.springsource.org/libs-release" }
 	maven { url "http://repo.springsource.org/libs-milestone" }
+	maven {
+		url "http://repo.springsource.org/ext-private-local"
+		credentials {
+			username = "$artifactoryUsername"
+			password = "$artifactoryPassword"
+		}
+	}
 }
 
 dependencies {
