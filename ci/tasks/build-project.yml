@@ -7,11 +7,12 @@ caches:
 - path: gradle
 run:
   path: bash
-  params:
-    FOO_BAR: foobar
   args:
     - -exc
     - |
       source /docker-lib.sh
       start_docker
       ${PWD}/git-repo/ci/scripts/build-project.sh
+params:
+  FOO_BAR: foobar
+      
