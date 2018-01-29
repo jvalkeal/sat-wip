@@ -40,6 +40,13 @@ configure(allprojects) {
 		maven { url "https://repo.spring.io/milestone" }
 		maven { url "https://dl.bintray.com/palantir/releases" }
 		mavenLocal()
+		maven {
+			url "http://repo.springsource.org/ext-private-local"
+			credentials {
+				username = "$artifactoryUsername"
+				password = "$artifactoryPassword"
+			}
+		}
 	}
 
 	compileJava {
