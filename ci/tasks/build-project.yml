@@ -2,13 +2,13 @@
 platform: linux
 inputs:
 - name: git-repo
-outputs:
-- name: distribution-repository
 caches:
 - path: maven
 - path: gradle
 run:
   path: bash
+  params:
+    FOO_BAR: foobar
   args:
     - -exc
     - |
