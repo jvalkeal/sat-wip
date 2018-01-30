@@ -16,7 +16,7 @@ RUN apt-get update && \
 	apt-get install -y libudev1 && \
 	apt-get install -y iptables && \
     curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-Linux-x86_64 -o docker-compose && \
-    mv docker-compose /bin/ && \
+    mv docker-compose /usr/bin/ && chmod +x /usr/bin/docker* && \
     curl https://get.docker.com/builds/Linux/x86_64/docker-${DOCKER_VERSION}.tgz | tar zx && \
     mv /docker/* /bin/ && chmod +x /bin/docker*
 
