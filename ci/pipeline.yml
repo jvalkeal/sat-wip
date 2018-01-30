@@ -5,23 +5,42 @@ resources:
     uri: ((github-repo))
     branch: ((branch))
     ignore_paths: ["ci/images/*"]
-- name: spring-boot-ci-image
+- name: ci-images-git-repo
+  type: git
+  source:
+    uri: ((github-repo))
+    branch: ((branch))
+    paths: ["ci/images/*"]
+- name: spring-cloud-skipper-ci-image
   type: docker-image
   source:
-    repository: ((docker-hub-organization))/spring-boot-ci-image
+    repository: springsource-docker-private-local.jfrog.io/spring-cloud-skipper-ci-image
+    username: ((artifactory-username))
+    password: ((artifactory-password))
     tag: ((branch))
 jobs:
+- name: spring-cloud-skipper-ci-images
+  plan:
+  - get: ci-images-git-repo
+    trigger: true
+  - put: spring-cloud-skipper-ci-image
+    params:
+      build: ci-images-git-repo/ci/images/spring-boot-ci-image
 - name: build
   serial: true
   public: false
   plan:
-  - get: spring-boot-ci-image
+  - get: spring-cloud-skipper-ci-image
   - get: git-repo
     trigger: true
   - do:
     - task: build-project
       privileged: true
       timeout: 30m
-      image: spring-boot-ci-image
+      image: spring-cloud-skipper-ci-image
       file: git-repo/ci/tasks/build-project.yml
-    
+groups:
+- name: "Build"
+  jobs: ["build"]
+- name: "CI Images"
+  jobs: ["spring-cloud-skipper-ci-images"]
