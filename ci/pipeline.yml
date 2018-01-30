@@ -25,7 +25,7 @@ jobs:
     trigger: true
   - put: spring-cloud-skipper-ci-image
     params:
-      build: ci-images-git-repo/ci/images/spring-boot-ci-image
+      build: ci-images-git-repo/ci/images/spring-cloud-skipper-ci-image
 - name: build
   serial: true
   public: false
