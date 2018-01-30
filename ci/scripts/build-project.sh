@@ -4,6 +4,6 @@ set -e
 source $(dirname $0)/common.sh
 
 pushd git-repo > /dev/null
-echo $FOO_BAR
+echo $ARTIFACTORY_USERNAME
 ./gradlew clean build
 popd > /dev/null
