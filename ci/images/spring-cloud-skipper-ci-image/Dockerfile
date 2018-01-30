@@ -18,7 +18,7 @@ RUN apt-get update && \
     curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-Linux-x86_64 -o docker-compose && \
     mv docker-compose /usr/bin/ && chmod +x /usr/bin/docker* && \
     curl https://get.docker.com/builds/Linux/x86_64/docker-${DOCKER_VERSION}.tgz | tar zx && \
-    mv /docker/* /bin/ && chmod +x /bin/docker*
+    mv /docker/* /usr/bin/ && chmod +x /usr/bin/docker*
 
 # Install entrykit
 RUN curl -L https://github.com/progrium/entrykit/releases/download/v${ENTRYKIT_VERSION}/entrykit_${ENTRYKIT_VERSION}_Linux_x86_64.tgz | tar zx && \
