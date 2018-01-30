@@ -14,5 +14,5 @@ run:
       start_docker
       ${PWD}/git-repo/ci/scripts/build-project.sh
 params:
-  FOO_BAR: foobar
-      
+  ARTIFACTORY_USERNAME: ((artifactory-username))
+  ARTIFACTORY_PASSWORD: ((artifactory-password))

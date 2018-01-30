@@ -43,8 +43,8 @@ configure(allprojects) {
 		maven {
 			url "http://repo.springsource.org/ext-private-local"
 			credentials {
-				username = "$artifactoryUsername"
-				password = "$artifactoryPassword"
+				username = artifactoryUsername ? artifactoryUsername : System.getenv()['ARTIFACTORY_USERNAME']
+				password = artifactoryPassword ? artifactoryPassword : System.getenv()['ARTIFACTORY_PASSWORD']
 			}
 		}
 	}
