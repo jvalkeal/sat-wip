@@ -63,7 +63,7 @@ start_docker() {
     server_args="${server_args} -g=$3"
   fi
 
-  docker daemon --data-root /scratch/docker ${server_args} >/tmp/docker.log 2>&1 &
+  dockerd --data-root /scratch/docker ${server_args} >/tmp/docker.log 2>&1 &
   echo $! > /tmp/docker.pid
 
   trap stop_docker EXIT
@@ -72,7 +72,6 @@ start_docker() {
 
   until docker info >/dev/null 2>&1; do
     echo waiting for docker to come up...
-    tail -50 /tmp/docker.log
     sleep 1
   done
 }
