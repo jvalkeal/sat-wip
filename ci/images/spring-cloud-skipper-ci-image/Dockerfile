@@ -17,7 +17,7 @@ RUN apt-get update && \
 	apt-get install -y iptables && \
     curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-Linux-x86_64 -o docker-compose && \
     mv docker-compose /usr/bin/ && chmod +x /usr/bin/docker* && \
-    curl https://get.docker.com/builds/Linux/x86_64/docker-${DOCKER_VERSION}.tgz | tar zx && \
+    curl https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz | tar zx && \
     mv /docker/* /usr/bin/ && chmod +x /usr/bin/docker*
 
 # Install entrykit
