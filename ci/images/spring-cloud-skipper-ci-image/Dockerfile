@@ -7,7 +7,7 @@ RUN apt-get update && \
 
 ADD https://raw.githubusercontent.com/spring-io/concourse-java-scripts/v0.0.1/concourse-java.sh /opt/
 
-ENV DOCKER_VERSION=17.05.0-ce \
+ENV DOCKER_VERSION=17.12.0-ce \
     DOCKER_COMPOSE_VERSION=1.18.0 \
     ENTRYKIT_VERSION=0.4.0
 
