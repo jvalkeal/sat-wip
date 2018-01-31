@@ -26,7 +26,7 @@ RUN curl -L https://github.com/progrium/entrykit/releases/download/v${ENTRYKIT_V
     mv entrykit /bin/entrykit && \
     entrykit --symlink
 
-ADD https://raw.githubusercontent.com/spring-projects/spring-boot/master/ci/images/docker-lib.sh /docker-lib.sh
+ADD https://raw.githubusercontent.com/jvalkeal/sat-wip/master/ci/images/docker-lib.sh /docker-lib.sh
 
 ENTRYPOINT [ \
 	"switch", \
