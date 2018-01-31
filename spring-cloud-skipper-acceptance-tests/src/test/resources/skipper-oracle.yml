@@ -1,7 +1,7 @@
 version: '3'
 services:
   oracle:
-    image: 'oracle/db-prebuilt:12.2.0.1-se2'
+    image: 'springsource-docker-private-local.jfrog.io/oracle/database-prebuilt:12.2.0.1-se2'
     ports:
       - 1521
   skipper:
