@@ -13,7 +13,7 @@ import static com.jayway.awaitility.Awaitility.with;
 
 public class ExternalDatabaseTests {
 
-//	@Test
+	@Test
 	@DockerCompose(locations = { "src/test/resources/skipper-postgres.yml" }, services = { "postgres", "skipper" })
 	public void testSkipperWithPostgres(DockerComposeInfo dockerComposeInfo) throws Exception {
 		DockerPort port = dockerComposeInfo.getRule().containers().container("skipper").port(7577);
@@ -21,7 +21,7 @@ public class ExternalDatabaseTests {
 		assertServerRunning(url);
 	}
 
-//	@Test
+	@Test
 	@DockerCompose(locations = { "src/test/resources/skipper-mysql.yml" }, services = { "mysql", "skipper" })
 	public void testSkipperWithMysql(DockerComposeInfo dockerComposeInfo) throws Exception {
 		DockerPort port = dockerComposeInfo.getRule().containers().container("skipper").port(7577);
@@ -44,7 +44,7 @@ public class ExternalDatabaseTests {
 			.and()
 			.await()
 				.ignoreExceptions()
-				.atMost(60, TimeUnit.SECONDS)
+				.atMost(120, TimeUnit.SECONDS)
 				.until(() -> template.getForObject(url, String.class).contains("Spring Cloud Skipper Server"));
 	}
 }
