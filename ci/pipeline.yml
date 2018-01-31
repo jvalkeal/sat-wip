@@ -18,13 +18,6 @@ resources:
     username: ((artifactory-username))
     password: ((artifactory-password))
     tag: ((branch))
-- name: oracle-database-image
-  type: docker-image
-  source:
-    repository: springsource-docker-private-local.jfrog.io/oracle/database-prebuilt
-    username: ((artifactory-username))
-    password: ((artifactory-password))
-    tag: 12.2.0.1-se2
 jobs:
 - name: spring-cloud-skipper-ci-images
   plan:
@@ -38,7 +31,6 @@ jobs:
   public: false
   plan:
   - get: spring-cloud-skipper-ci-image
-  - get: oracle-database-image
   - get: git-repo
     trigger: true
   - do:
