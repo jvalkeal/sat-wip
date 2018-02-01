@@ -77,6 +77,8 @@ jobs:
       - include:
         - "/**/*.jar"
         - "/**/*.pom"
+        exclude:
+        - "/**/*.xml"
         properties:
           dummy: value
 groups:
