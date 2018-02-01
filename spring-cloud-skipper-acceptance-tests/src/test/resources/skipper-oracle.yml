@@ -5,10 +5,12 @@ services:
     ports:
       - 1521
   skipper:
-    image: 'spring-cloud-skipper-acceptance-docker2'
+    image: 'spring-cloud-skipper-acceptance-image-drivers'
     environment:
+      - ACCEPTANCE_TEST_SYSTEM_PROPERTIES=-Doracle.jdbc.timezoneAsRegion=false
+      - ACCEPTANCE_TEST_START_WAIT=60
       - SPRING_DATASOURCE_URL=jdbc:oracle:thin:spring/spring@oracle:1521/ORCLPDB1
-      - SPRING_DATASOURCE_DRIVER=oracle.jdbc.OracleDriver
+      - SPRING_DATASOURCE_DRIVER_CLASS=oracle.jdbc.OracleDriver
       - SPRING_DATASOURCE_USERNAME=spring
       - SPRING_DATASOURCE_PASSWORD=spring
     ports:

@@ -94,7 +94,7 @@ project('spring-cloud-skipper-acceptance-core') {
 	}
 }
 
-project('spring-cloud-skipper-acceptance-docker') {
+project('spring-cloud-skipper-acceptance-image-legacy') {
 	apply plugin: 'com.palantir.docker'
 
 	dependencies {
@@ -102,7 +102,7 @@ project('spring-cloud-skipper-acceptance-docker') {
 	}
 
 	docker {
-		name "spring-cloud-skipper-acceptance-docker"
+		name "spring-cloud-skipper-acceptance-image-legacy"
 		dockerfile file('src/main/resources/Dockerfile')
 		files getResolvedVersionOf(configurations, "spring-cloud-skipper-server").file.absolutePath[0], 'src/main/resources/entrypoint.sh'
 		buildArgs(['JAR_FILE': getResolvedVersionOf(configurations, "spring-cloud-skipper-server").file.name[0], 'ENTRYPOINT_FILE': 'entrypoint.sh'])
@@ -112,7 +112,7 @@ project('spring-cloud-skipper-acceptance-docker') {
 	
 }
 
-project('spring-cloud-skipper-acceptance-docker2') {
+project('spring-cloud-skipper-acceptance-image-drivers') {
 	apply plugin: 'com.palantir.docker'
 
 	dependencies {
@@ -120,7 +120,7 @@ project('spring-cloud-skipper-acceptance-docker2') {
 	}
 
 	docker {
-		name "spring-cloud-skipper-acceptance-docker2"
+		name "spring-cloud-skipper-acceptance-image-drivers"
 		dockerfile file('src/main/resources/Dockerfile')
 		files getResolvedVersionOf(configurations, "skipper-oracle").file.absolutePath[0], 'src/main/resources/entrypoint.sh'
 		buildArgs(['JAR_FILE': getResolvedVersionOf(configurations, "skipper-oracle").file.name[0], 'ENTRYPOINT_FILE': 'entrypoint.sh'])
@@ -135,13 +135,13 @@ project('spring-cloud-skipper-acceptance-tests') {
 
 	dependencies {
 		compile project(":spring-cloud-skipper-acceptance-core")
-		compile project(":spring-cloud-skipper-acceptance-docker")
 		testCompile('org.springframework.boot:spring-boot-starter-test')
 		testCompile('org.springframework.boot:spring-boot-starter-web')
 	}
 
 		
-	build.dependsOn ':spring-cloud-skipper-acceptance-docker:docker'
+	build.dependsOn ':spring-cloud-skipper-acceptance-image-legacy:docker'
+	build.dependsOn ':spring-cloud-skipper-acceptance-image-drivers:docker'
 }
 
 

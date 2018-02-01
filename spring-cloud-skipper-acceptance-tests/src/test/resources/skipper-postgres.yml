@@ -14,10 +14,13 @@ services:
       timeout: 5s
       retries: 12
   skipper:
-    image: 'spring-cloud-skipper-acceptance-docker'
+    image: 'spring-cloud-skipper-acceptance-image-legacy'
     environment:
+      - ACCEPTANCE_TEST_START_WAIT=5
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/skipper
-      - SPRING_DATASOURCE_DRIVER=org.postgresql.Driver
+      - SPRING_DATASOURCE_USERNAME=spring
+      - SPRING_DATASOURCE_PASSWORD=spring
+      - SPRING_DATASOURCE_DRIVER_CLASS=org.postgresql.Driver
     ports:
       - 7577
     depends_on:
