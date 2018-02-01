@@ -39,7 +39,7 @@ jobs:
   - put: spring-cloud-skipper-ci-image
     params:
       build: ci-images-git-repo/ci/images/spring-cloud-skipper-ci-image
-- name: build
+- name: acceptance-tests
   serial: true
   public: false
   plan:
@@ -82,7 +82,10 @@ jobs:
         properties:
           dummy: value
 groups:
-- name: "Build"
-  jobs: ["build", "build-skipper-server-with-drivers"]
-- name: "CI Images"
+- name: "Tests"
+  jobs: ["acceptance-tests"]
+- name: "CI-Images"
   jobs: ["spring-cloud-skipper-ci-images"]
+- name: "Ci-APPs"
+  jobs: ["build-skipper-server-with-drivers"]
+  
