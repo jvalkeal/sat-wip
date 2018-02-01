@@ -75,8 +75,7 @@ jobs:
       disable_checksum_uploads: true
       artifact_set:
       - include:
-        - "/**/*.jar"      
-        - "/**/*.pom"      
+        - "/**/skipper-server-with-drivers-*"
 groups:
 - name: "Build"
   jobs: ["build", "build-skipper-server-with-drivers"]
