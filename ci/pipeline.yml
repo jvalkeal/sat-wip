@@ -86,6 +86,6 @@ groups:
   jobs: ["acceptance-tests"]
 - name: "CI-Images"
   jobs: ["spring-cloud-skipper-ci-images"]
-- name: "CI-APPs"
+- name: "CI-Apps"
   jobs: ["build-skipper-server-with-drivers"]
   
