@@ -19,7 +19,7 @@ apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 
 group = 'org.springframework.cloud.skipper.acceptance.app'
-version = '1.0.0.BUILD-SNAPSHOT'
+version = '1.0.0.SNAPSHOT'
 sourceCompatibility = 1.8
 
 repositories {
