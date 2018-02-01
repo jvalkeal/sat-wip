@@ -12,7 +12,9 @@ echo xxx2
 pwd
 echo xxx3
 ls
-cd custom-apps/skipper-server-with-drivers && ./gradlew clean build install -Dmaven.repo.local=${repository}
+pushd custom-apps/skipper-server-with-drivers > /dev/null
+./gradlew clean build install -Dmaven.repo.local=${repository}
+popd > /dev/null
 echo xxx4
 find ${repository}
 echo xxx5
