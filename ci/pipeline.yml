@@ -76,6 +76,7 @@ jobs:
       artifact_set:
       - include:
         - "/**/skipper-server-with-drivers-*"
+        properties:
 groups:
 - name: "Build"
   jobs: ["build", "build-skipper-server-with-drivers"]
