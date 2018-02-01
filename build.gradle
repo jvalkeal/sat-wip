@@ -116,14 +116,14 @@ project('spring-cloud-skipper-acceptance-image-drivers') {
 	apply plugin: 'com.palantir.docker'
 
 	dependencies {
-		compile('org.springframework.cloud.skipper.acceptance.app:skipper-oracle:1.0.0.BUILD-SNAPSHOT')
+		compile('org.springframework.cloud.skipper.acceptance.app:skipper-server-with-drivers:1.0.0.BUILD-SNAPSHOT')
 	}
 
 	docker {
 		name "spring-cloud-skipper-acceptance-image-drivers"
 		dockerfile file('src/main/resources/Dockerfile')
-		files getResolvedVersionOf(configurations, "skipper-oracle").file.absolutePath[0], 'src/main/resources/entrypoint.sh'
-		buildArgs(['JAR_FILE': getResolvedVersionOf(configurations, "skipper-oracle").file.name[0], 'ENTRYPOINT_FILE': 'entrypoint.sh'])
+		files getResolvedVersionOf(configurations, "skipper-server-with-drivers").file.absolutePath[0], 'src/main/resources/entrypoint.sh'
+		buildArgs(['JAR_FILE': getResolvedVersionOf(configurations, "skipper-server-with-drivers").file.name[0], 'ENTRYPOINT_FILE': 'entrypoint.sh'])
 	}
 	
 	build.dependsOn 'docker'
