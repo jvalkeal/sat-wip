@@ -1,6 +1,9 @@
 buildscript {
 	ext {
 		springBootVersion = '1.5.9.RELEASE'
+        springCloudSkipperVersion = '1.0.0.BUILD-SNAPSHOT'
+        oracleJdbcDriverVersion = '12.2.0.1'
+        flywayVersion = '5.0.5'
 	}
 	repositories {
 		mavenCentral()
@@ -35,10 +38,10 @@ repositories {
 }
 
 dependencies {
-	compile('org.springframework.cloud:spring-cloud-skipper-server:1.0.0.BUILD-SNAPSHOT')
+	compile("org.springframework.cloud:spring-cloud-skipper-server:${springCloudSkipperVersion}")
 	compile('org.springframework.boot:spring-boot-starter')
-	runtime('org.flywaydb:flyway-core:5.0.5')
-	runtime('com.oracle.jdbc:ojdbc8:12.2.0.1')
-//	runtime('com.oracle.jdbc:ojdbc6:11.2.0.4')
+	runtime("com.oracle.jdbc:ojdbc8:${oracleJdbcDriverVersion}")
+    runtime("org.flywaydb:flyway-core:${flywayVersion}")
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
+
