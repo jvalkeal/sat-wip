@@ -96,7 +96,7 @@ public class DockerComposeManager {
 			for (String service : services) {
 				builder.waitingForService(service, toHaveAllPortsOpen());
 			}
-			builder.saveLogsTo("build/test-docker-logs");
+			builder.saveLogsTo("build/test-docker-logs/" + classKey + "-" + methodKey);
 			DockerComposeRule rule = builder.build();
 			rules.put(key, rule);
 			if (start) {
@@ -126,7 +126,7 @@ public class DockerComposeManager {
 			for (String service : services) {
 				builder.waitingForService(service, toHaveAllPortsOpen());
 			}
-			builder.saveLogsTo("build/test-docker-logs");
+			builder.saveLogsTo("build/test-docker-logs/" + classKey + "-" + methodKey);
 			DockerComposeRule rule = builder.build();
 			rules.put(key, rule);
 			if (start) {

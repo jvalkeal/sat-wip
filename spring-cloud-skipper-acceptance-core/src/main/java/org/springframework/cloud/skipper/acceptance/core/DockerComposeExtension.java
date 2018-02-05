@@ -50,7 +50,7 @@ public class DockerComposeExtension
 		DockerComposeManager dockerComposeManager = getDockerComposeManager(extensionContext);
 
 		Class<?> testClass = extensionContext.getRequiredTestClass();
-		String classKey = extensionContext.getRequiredTestClass().toString();
+		String classKey = extensionContext.getRequiredTestClass().getSimpleName();
 
 		List<DockerCompose> dockerComposeAnnotations = AnnotationUtils.findRepeatableAnnotations(testClass, DockerCompose.class);
 		for (DockerCompose dockerComposeAnnotation : dockerComposeAnnotations) {
@@ -67,8 +67,8 @@ public class DockerComposeExtension
 		DockerComposeManager dockerComposeManager = getDockerComposeManager(context);
 
 		Method testMethod = context.getRequiredTestMethod();
-		String classKey = context.getRequiredTestClass().toString();
-		String methodKey = context.getRequiredTestMethod().toString();
+		String classKey = context.getRequiredTestClass().getSimpleName();
+		String methodKey = context.getRequiredTestMethod().getName();
 		
 		List<DockerCompose> dockerComposeAnnotations = AnnotationUtils.findRepeatableAnnotations(testMethod, DockerCompose.class);
 		for (DockerCompose dockerComposeAnnotation : dockerComposeAnnotations) {
@@ -86,8 +86,8 @@ public class DockerComposeExtension
 	public void afterEach(ExtensionContext context) throws Exception {
 		// clean containers related to class and method
 		DockerComposeManager dockerComposeManager = getDockerComposeManager(context);
-		String classKey = context.getRequiredTestClass().toString();
-		String methodKey = context.getRequiredTestMethod().toString();
+		String classKey = context.getRequiredTestClass().getSimpleName();
+		String methodKey = context.getRequiredTestMethod().getName();
 		dockerComposeManager.stop(classKey, methodKey);
 	}
 

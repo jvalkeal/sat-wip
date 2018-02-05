@@ -17,6 +17,13 @@ resources:
     uri: ((github-repo))
     branch: ((branch))
     paths: ["ci/images/*"]
+- name: acceptance-tests-reports
+  type: s3
+  source:
+    bucket: ((spr-artifacts-s3-bucket-name))
+    regexp: spring-cloud-skipper-acceptance-tests/build/test-docker-logs/(.*)/(.*)
+    access_key_id: ((spr-s3-access-key-id))
+    secret_access_key: ((spr-s3-secret-access-key))
 - name: artifactory-repo
   type: artifactory-resource
   source:
@@ -52,6 +59,9 @@ jobs:
       timeout: 30m
       image: spring-cloud-skipper-ci-image
       file: git-repo/ci/tasks/build-project.yml
+      on_failure:
+        aggregate:
+        - put: acceptance-tests-reports
 - name: build-skipper-server-with-drivers100
   serial: true
   public: false
