@@ -15,7 +15,7 @@ services:
       timeout: 20s
       retries: 10
   skipper:
-    image: 'spring-cloud-skipper-acceptance-image-legacy'
+    image: 'spring-cloud-skipper-acceptance-image-legacy100'
     environment:
       - ACCEPTANCE_TEST_START_WAIT=5
       - SPRING_DATASOURCE_URL=jdbc:mariadb://mysql:3306/skipper

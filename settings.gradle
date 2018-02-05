@@ -1,5 +1,6 @@
 rootProject.name = 'spring-cloud-skipper-acceptance'
 include 'spring-cloud-skipper-acceptance-core'
-include 'spring-cloud-skipper-acceptance-image-legacy'
+include 'spring-cloud-skipper-acceptance-image-legacy100'
+include 'spring-cloud-skipper-acceptance-image-legacy101'
 include 'spring-cloud-skipper-acceptance-image-drivers'
 include 'spring-cloud-skipper-acceptance-tests'

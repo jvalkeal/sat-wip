@@ -15,7 +15,11 @@
  */
 package org.springframework.cloud.skipper.acceptance.core;
 
-public interface DockerComposeInfo {
+import com.palantir.docker.compose.DockerComposeRule;
 
-	DockerComposeCluster id(String id);
+public interface DockerComposeCluster {
+
+	DockerComposeRule getRule();
+	void start();
+	void stop();
 }

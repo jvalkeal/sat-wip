@@ -18,26 +18,15 @@ package org.springframework.cloud.skipper.acceptance.core;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
-import java.lang.annotation.Repeatable;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-
-import org.junit.jupiter.api.extension.ExtendWith;
 
 @Documented
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.METHOD})
-@Repeatable(DockerComposes.class)
-@ExtendWith(DockerComposeExtension.class)
-public @interface DockerCompose {
+public @interface DockerComposes {
 
-	int order() default 0;
-	String id() default "";
-	boolean start() default true;
-	String[] locations() default {};		
-	String[] services() default {};	
-	String log() default "";
-	
+	DockerCompose[] value();	
 }
