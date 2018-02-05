@@ -1,7 +1,7 @@
 buildscript {
 	ext {
 		springBootVersion = '1.5.9.RELEASE'
-        springCloudSkipperVersion = '1.0.0.BUILD-SNAPSHOT'
+        springCloudSkipperVersion = '1.0.0.RELEASE'
         oracleJdbcDriverVersion = '12.2.0.1'
         flywayVersion = '5.0.5'
 	}

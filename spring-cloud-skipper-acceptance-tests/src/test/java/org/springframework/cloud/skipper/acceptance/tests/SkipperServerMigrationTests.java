@@ -73,4 +73,21 @@ public class SkipperServerMigrationTests {
 		String url2 = "http://" + port2.getIp() + ":" + port2.getExternalPort() + "/api/about";
 		AssertUtils.assertServerRunning(url2);		
 	}	
+
+	@Test
+	@DockerCompose(id = "db", order = 0, locations = { "src/test/resources/oracle.yml" }, services = { "oracle" })
+	@DockerCompose(id = "skipper100", order = 1, locations = { "src/test/resources/skipper100oracle.yml" }, services = { "skipper" })
+	@DockerCompose(id = "skipper101", order = 1, locations = { "src/test/resources/skipper101oracle.yml" }, services = { "skipper" }, start = false)
+	public void testMigrationFrom100To101WithOracle(DockerComposeInfo dockerComposeInfo) throws Exception {
+		DockerPort port1 = dockerComposeInfo.id("skipper100").getRule().containers().container("skipper").port(7577);
+		String url1 = "http://" + port1.getIp() + ":" + port1.getExternalPort() + "/api/about";
+		AssertUtils.assertServerRunning(url1);
+
+		dockerComposeInfo.id("skipper100").stop();
+		dockerComposeInfo.id("skipper101").start();
+
+		DockerPort port2 = dockerComposeInfo.id("skipper101").getRule().containers().container("skipper").port(7577);
+		String url2 = "http://" + port2.getIp() + ":" + port2.getExternalPort() + "/api/about";
+		AssertUtils.assertServerRunning(url2);		
+	}	
 }
