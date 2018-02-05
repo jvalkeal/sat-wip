@@ -62,6 +62,9 @@ jobs:
       on_failure:
         aggregate:
         - put: acceptance-tests-reports
+      on_success:
+        aggregate:
+        - put: acceptance-tests-reports
 - name: build-skipper-server-with-drivers100
   serial: true
   public: false
