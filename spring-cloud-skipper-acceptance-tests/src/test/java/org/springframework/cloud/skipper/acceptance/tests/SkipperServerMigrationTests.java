@@ -15,11 +15,8 @@
  */
 package org.springframework.cloud.skipper.acceptance.tests;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.cloud.skipper.acceptance.core.DockerCompose;
-import org.springframework.cloud.skipper.acceptance.core.DockerComposeExtension;
 import org.springframework.cloud.skipper.acceptance.core.DockerComposeInfo;
 import org.springframework.cloud.skipper.acceptance.tests.support.AssertUtils;
 
@@ -32,8 +29,6 @@ import com.palantir.docker.compose.connection.DockerPort;
  * @author Janne Valkealahti
  *
  */
-//@ExtendWith(DockerComposeExtension.class)
-@Disabled
 public class SkipperServerMigrationTests {
 
 	@Test

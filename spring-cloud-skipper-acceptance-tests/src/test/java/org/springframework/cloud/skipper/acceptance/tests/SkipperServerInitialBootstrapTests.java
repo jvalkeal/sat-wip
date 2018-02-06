@@ -15,9 +15,6 @@
  */
 package org.springframework.cloud.skipper.acceptance.tests;
 
-import java.util.concurrent.TimeUnit;
-
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.cloud.skipper.acceptance.core.DockerCompose;
 import org.springframework.cloud.skipper.acceptance.core.DockerComposeInfo;
@@ -40,11 +37,9 @@ public class SkipperServerInitialBootstrapTests {
 		DockerPort port = dockerComposeInfo.id("").getRule().containers().container("skipper").port(7577);
 		String url = "http://" + port.getIp() + ":" + port.getExternalPort() + "/api/about";
 		AssertUtils.assertServerRunning(url);
-//		AssertUtils.assertServerRunning("not found xxx", url, 1, TimeUnit.SECONDS, 10, TimeUnit.SECONDS);
 	}
 
 	@Test
-	@Disabled
 	@DockerCompose(locations = { "src/test/resources/skipper-mysql.yml" }, services = { "mysql", "skipper" })
 	public void testSkipperWithMysql(DockerComposeInfo dockerComposeInfo) throws Exception {
 		DockerPort port = dockerComposeInfo.id("").getRule().containers().container("skipper").port(7577);
@@ -53,7 +48,6 @@ public class SkipperServerInitialBootstrapTests {
 	}
 
 	@Test
-	@Disabled
 	@DockerCompose(locations = { "src/test/resources/skipper-oracle.yml" }, services = { "oracle", "skipper" })
 	public void testSkipperWithOracle(DockerComposeInfo dockerComposeInfo) throws Exception {
 		DockerPort port = dockerComposeInfo.id("").getRule().containers().container("skipper").port(7577);

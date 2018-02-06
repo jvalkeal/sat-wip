@@ -65,7 +65,7 @@ jobs:
       timeout: 30m
       image: spring-cloud-skipper-ci-image
       file: git-repo/ci/tasks/build-project.yml
-      on_success:
+      on_failure:
         aggregate:
         - put: acceptance-tests-reports
           params:
