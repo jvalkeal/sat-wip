@@ -18,4 +18,3 @@ run:
 params:
   ARTIFACTORY_USERNAME: ((artifactory-username))
   ARTIFACTORY_PASSWORD: ((artifactory-password))
-  BUILD_NUMBER: "${BUILD_PIPELINE_NAME}-${BUILD_JOB_NAME}-${BUILD_NAME}"

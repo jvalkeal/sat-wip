@@ -65,8 +65,6 @@ jobs:
       timeout: 30m
       image: spring-cloud-skipper-ci-image
       file: git-repo/ci/tasks/build-project.yml
-      params:
-        build_number: "${BUILD_PIPELINE_NAME}-${BUILD_JOB_NAME}-${BUILD_NAME}"
       on_success:
         aggregate:
         - put: acceptance-tests-reports
