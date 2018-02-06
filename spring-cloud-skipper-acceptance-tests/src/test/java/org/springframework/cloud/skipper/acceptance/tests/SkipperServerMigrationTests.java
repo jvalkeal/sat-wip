@@ -31,7 +31,7 @@ import com.palantir.docker.compose.connection.DockerPort;
  * @author Janne Valkealahti
  *
  */
-//@ExtendWith(DockerComposeExtension.class)
+@ExtendWith(DockerComposeExtension.class)
 public class SkipperServerMigrationTests {
 
 	@Test
