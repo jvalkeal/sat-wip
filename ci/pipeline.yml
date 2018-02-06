@@ -21,9 +21,10 @@ resources:
   type: s3
   source:
     bucket: ((spr-artifacts-s3-bucket-name))
-    regexp: spring-cloud-skipper-acceptance-tests/build/test-docker-logs/(.*)/(.*)
+    regexp: git-repo/spring-cloud-skipper-acceptance-tests/build/test-docker-logs/(.*)/(.*)
     access_key_id: ((spr-s3-access-key-id))
     secret_access_key: ((spr-s3-secret-access-key))
+    region_name: us-west-1
 - name: artifactory-repo
   type: artifactory-resource
   source:
