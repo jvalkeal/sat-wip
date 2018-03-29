@@ -62,7 +62,7 @@ jobs:
   - do:
     - task: build-project
       privileged: true
-      timeout: 30m
+      timeout: 90m
       image: spring-cloud-skipper-ci-image
       file: git-repo/ci/tasks/build-project.yml
       on_failure:

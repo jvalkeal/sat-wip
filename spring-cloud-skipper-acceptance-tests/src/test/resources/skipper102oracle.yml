@@ -1,11 +1,9 @@
 version: '3'
 services:
-  oracle:
-    image: 'springsource-docker-private-local.jfrog.io/oracle/database-prebuilt:12.2.0.1-se2'
-    ports:
-      - 1521
   skipper:
-    image: 'spring-cloud-skipper-acceptance-image-drivers100'
+    image: 'spring-cloud-skipper-acceptance-image-drivers102'
+    container_name: skipper
+    network_mode: bridge
     environment:
       - ACCEPTANCE_TEST_SYSTEM_PROPERTIES=-Doracle.jdbc.timezoneAsRegion=false
       - ACCEPTANCE_TEST_START_WAIT=60
@@ -15,5 +13,5 @@ services:
       - SPRING_DATASOURCE_PASSWORD=spring
     ports:
       - 7577
-    depends_on:
-      - "oracle"
+    external_links:
+      - oracle:oracle
