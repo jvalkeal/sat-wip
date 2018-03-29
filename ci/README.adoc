@@ -1,3 +1,0 @@
-
-fly -t local set-pipeline -p sat-wip -c ci/pipeline.yml -l ci/parameters.yml
-

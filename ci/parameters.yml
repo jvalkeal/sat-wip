@@ -1,9 +1,9 @@
 email-server: "smtp.svc.pivotal.io"
 email-from: "ci@spring.io"
 email-to: ["jvalkealahti@pivotal.io"]
+github-repox: "https://github.com/spring-cloud/spring-cloud-skipper.git"
 github-repo: "https://github.com/jvalkeal/sat-wip.git"
-github-repo-name: "jvalkeal/sat-wip"
-docker-hub-organization: "springci"
 artifactory-server: "https://repo.spring.io/"
 branch: "master"
 build-name: "sat-wip"
+build-namex: "spring-cloud-skipper-acceptance-tests"

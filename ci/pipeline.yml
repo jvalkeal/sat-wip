@@ -47,7 +47,7 @@ jobs:
 - name: spring-cloud-skipper-ci-images
   plan:
   - get: ci-images-git-repo
-    trigger: true
+    trigger: false
   - put: spring-cloud-skipper-ci-image
     params:
       build: ci-images-git-repo/ci/images/spring-cloud-skipper-ci-image
@@ -132,4 +132,4 @@ groups:
   jobs: ["spring-cloud-skipper-ci-images"]
 - name: "CI-Apps"
   jobs: ["build-skipper-server-with-drivers100", "build-skipper-server-with-drivers101"]
-  
+
