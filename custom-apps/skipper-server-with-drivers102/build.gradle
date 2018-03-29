@@ -18,6 +18,7 @@ buildscript {
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
+apply plugin: 'maven'
 apply plugin: 'org.springframework.boot'
 
 group = 'org.springframework.cloud.skipper.acceptance.app'
